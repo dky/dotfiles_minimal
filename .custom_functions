@@ -1,0 +1,84 @@
+function color_my_prompt {
+	local __user="\[\033[1;37m\]\u"
+		local __host_ip=$(ifconfig $(route -n | grep ^0.0.0.0 | awk '{print $NF}') | grep inet | grep -v inet6 | awk '{print $2}')
+		local __asterisk="\[\033[0;36m\]@"
+		local __host="\[\033[0;31m\]\h"
+		local __cur_location="\[\033[01;34m\]\w"
+		local __git_branch_color="\[\033[31m\]"
+		local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
+		local __prompt_tail="\[\033[35m\]$tail"
+		local __last_color="\[\033[00m\]"
+		export PS1="$__user$__asterisk$__host_ip $__cur_location $__git_branch_color$__git_branch$__prompt_tail$__last_color "
+}
+
+color_my_prompt
+
+#docker functions
+function dkr { 
+	name="$1" 
+		image="$2"
+		docker run -i -t --name $name -h $name $image /bin/bash;
+}
+
+function dkrmce {
+	for i in `docker ps -a | grep "Exited" | awk '{ print $1 }'`; do docker rm -f $i; done
+}
+
+function dkrmcc {
+	for i in `docker ps -a | grep "Created" | awk '{ print $1 }'`; do docker rm -f $i; done
+}
+
+function dkrmin {
+	for i in `docker images | grep "^<none>" | awk '{ print $3 }' | grep -v IMAGE`; do docker rmi $i; done
+}
+
+function dkip {
+	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+}
+
+function dkesh {
+	docker exec -it $1 /bin/sh
+}
+
+function sshnokey {
+	echo "Usage: sshnokey host port"
+		sshhost=$1
+		sshport=$2
+
+		if [ -n "$sshport" ]; then
+			echo "sshport not empty"
+		else
+			echo "ssh port empty using default"
+				sshport=22
+				fi
+
+				echo "Connecting to $sshhost on port: $sshport"
+				ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $sshhost -p $sshport
+}
+
+# Use FZF to switch Tmux sessions:
+# bind-key s run "tmux new-window 'bash -ci fs'"
+fs() {
+	local -r fmt='#{session_id}:|#S|(#{session_attached} attached)'
+	{ tmux display-message -p -F "$fmt" && tmux list-sessions -F "$fmt"; } \
+	| awk '!seen[$1]++' \
+		| column -t -s'|' \
+		| fzf -q '$' --reverse --prompt 'switch session: ' -1 \
+		| cut -d':' -f1 \
+		| xargs tmux switch-client -t
+}
+
+gitpc() {
+GIT_HOOKS="./.git/hooks"
+if [ -d $GIT_HOOKS ]; then
+	echo "./git/hooks exists, creating post-commit script"
+cat > $GIT_HOOKS/post-commit << EOF
+#!/bin/sh
+
+git push origin master >/dev/null 2>&1 &
+EOF
+chmod u+x $GIT_HOOKS/post-commit
+else
+	echo "Git hooks dir doesn't exist"
+fi
+}

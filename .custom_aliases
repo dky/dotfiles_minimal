@@ -1,0 +1,91 @@
+#docker aliases
+alias dkls="docker images"
+alias dkps="docker ps -a"
+#docker last container to start, only list id
+alias dkl='docker ps -l -q'
+#Docker start stop
+alias dks='docker start $1'
+alias dka='docker attach $1'
+#Docker rm images/containers
+alias dkrmc='docker rm $1'
+alias dkrmcf='docker rm -f $1'
+alias dkrmi='docker rmi $1'
+alias dkrmcl='docker rm `docker ps -l -q`'
+alias dkrmclf='docker rm -f `docker ps -l -q`'
+#volumes
+alias dkvls='docker volume ls'
+alias dkvrm='docker volume rm'
+#logs/top
+alias dklog='docker logs $1'
+alias dlf='docker logs -f'
+alias dktop='docker top $1'
+#docker compose
+alias dcu="docker-compose up"
+alias dcud="docker-compose up -d"
+alias dcd="docker-compose down"
+#docker swarm
+alias dksls="docker service ls"
+alias dksps="docker service ps"
+alias dksl="docker service logs -f"
+alias dksrm="docker service rm"
+alias dknls="docker node ls" 
+alias dcoker=docker
+
+#screen aliases
+alias sls="screen -ls"
+alias sr="screen -r"
+#alias ss="screen -S"
+
+#tmux aliases
+alias tn="tmux new -s $1"
+alias ta="tmux attach -t $1"
+alias tad="tmux attach -dt $1"
+alias tls="tmux ls"
+
+#Git
+alias Git='git'
+alias gi='git init'
+alias ga='git add'
+alias gpd='git pull origin master'
+alias gpu='git push origin master'
+alias gl='git log --pretty --pretty=oneline'
+alias gs='git status'
+alias gd='git diff'
+alias gma='git commit -am'
+alias gco='git checkout'
+alias gra='git remote add origin'
+alias gc='git clone'
+alias gb='git branch'
+alias gbl='git branch -v'
+alias gbd='git branch -d'
+alias gam='git commit --amend -m'
+alias gdiff='git diff'
+
+#vim alias
+alias vi="vim"
+
+#custom aliases
+alias ll="ls -ltrh"
+alias hs="history"
+alias wi="whois"
+
+#sudo
+alias sd="sudo"
+alias suod="sudo"
+
+alias la="ls -lah"
+alias rmrf="rm -rf"
+
+#alias for chmod
+alias chux="chmod u+x"
+#apt update
+alias aptupdate="sudo apt-get update && sudo apt-get -y upgrade"
+
+#nvim alias to ni
+alias ni=nvim
+
+#alias dict to dic
+alias dict=dic
+
+#unset proxy
+alias unsetproxy="unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy"

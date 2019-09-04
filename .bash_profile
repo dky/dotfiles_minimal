@@ -15,7 +15,4 @@ if [ -n "$BASH_VERSION" ]; then
 	if [ -f "$HOME/.dot_private" ]; then
 		source "$HOME/.dot_private"
 	fi
-	if [ -f "$HOME/bin/export" ]; then
-		source $HOME/bin/export
-	fi
 fi

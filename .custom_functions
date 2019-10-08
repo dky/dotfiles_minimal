@@ -12,7 +12,8 @@ function color_my_prompt {
 }
 
 function pmin {
-   export PS1="🤓 "
+		local __cur_location="\[\033[01;34m\]\w"
+   export PS1="🤓 $__cur_location "
 }
 
 color_my_prompt

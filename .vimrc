@@ -20,7 +20,6 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dky/vim-aftercolors'
 Plug '907th/vim-auto-save'
-Plug 'fatih/vim-go'
 
 call plug#end()
 

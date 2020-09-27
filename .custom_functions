@@ -1,6 +1,6 @@
 function color_my_prompt {
 	local __user="\[\033[1;37m\]\u"
-		local __host_ip=$(ifconfig $(route -n | grep ^0.0.0.0 | awk '{print $NF}') | grep inet | grep -v inet6 | awk '{print $2}')
+		local __host_ip=$(/sbin/ifconfig $(/sbin/route -n | grep ^0.0.0.0 | awk '{print $NF}') | grep inet | grep -v inet6 | awk '{print $2}')
 		local __asterisk="\[\033[0;36m\]@"
 		local __host="\[\033[0;31m\]\h"
 		local __cur_location="\[\033[01;34m\]\w"
